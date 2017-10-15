@@ -67,7 +67,16 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-(function webpackMissingModule() { throw new Error("Cannot find module \"F:\\chenshisong\\ES6-Lottery-project\\ES6\\app\\js\\index.js\""); }());
+module.exports = __webpack_require__(1);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// import 'babel-polyfill';
+// import Lottery from './lottery';
 
 
 /***/ })
