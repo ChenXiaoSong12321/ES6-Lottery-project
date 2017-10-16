@@ -33,4 +33,4 @@ const args = yargs
 	
 	.argv
 
-	
+export default args;

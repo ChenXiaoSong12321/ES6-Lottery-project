@@ -55,10 +55,7 @@ gulp.task('scripts',()=>{
 		extname:'.min.js'
 	}))
 	// 压缩，配置如何压缩
-	.pipe(uglify({
-		compress:{properties:false},
-		output:{'quote_keys':true}
-	}))
+	.pipe(uglify({compress:{properties:false},output:{'quote_keys':true}}))
 	// 存储的某个地方
 	.pipe(gulp.dest('server/public/js'))
 	// 监听文件变化后刷新
