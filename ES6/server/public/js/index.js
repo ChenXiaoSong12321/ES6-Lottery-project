@@ -9585,10 +9585,24 @@ module.exports = function (regExp, replace) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-// 字符串扩展
-// 字符串新增特性
-// Unicode表示法、便利接口、模板字符串、新增方法（10种）
 
+
+// 数值扩展
+
+// 新增方法
+// 方法调整
+
+{
+	// 不区分大小写 0b 0o
+	console.log(503);
+	console.log(503);
+}
+
+{
+	// Number.isFinite()
+	console.log('15', Number.isFinite(15));
+	console.log('NaN', Number.isFinite(NaN));
+}
 
 /***/ })
 /******/ ]);
