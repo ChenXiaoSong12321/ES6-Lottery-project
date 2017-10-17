@@ -9587,21 +9587,25 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
-// 数值扩展
-
-// 新增方法
-// 方法调整
+// 数组扩展
+// 数组新增特性
+// Array.from Array.of copyWithin find\findIndex 
+// fill entries\keys\values includes
 
 {
-	// 不区分大小写 0b 0o
-	console.log(503);
-	console.log(503);
+	var arr = Array.of(3, 4, 7, 9, 11);
+	console.log('arr', arr);
+
+	var empty = Array.of();
+	console.log('empty', empty);
 }
 
 {
-	// Number.isFinite()
-	console.log('15', Number.isFinite(15));
-	console.log('NaN', Number.isFinite(NaN));
+	var _arr = document.querySelectorAll('p');
+	var pArr = Array.from(_arr);
+	pArr.forEach(function (item) {
+		console.log(item.textContent);
+	});
 }
 
 /***/ })
