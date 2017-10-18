@@ -9587,25 +9587,107 @@ module.exports = function (regExp, replace) {
 "use strict";
 
 
-// 数组扩展
-// 数组新增特性
-// Array.from Array.of copyWithin find\findIndex 
-// fill entries\keys\values includes
+// 函数扩展
+// 新增特性
+// 参数默认值 rest参数 扩展运算符 箭头函数 this绑定
+// 尾调用
 
 {
-	var arr = Array.of(3, 4, 7, 9, 11);
-	console.log('arr', arr);
+	var test = function test(x) {
+		var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'world';
 
-	var empty = Array.of();
-	console.log('empty', empty);
+		console.log('默认', x, y);
+	};
+
+	test('hello');
+	test('hello', 'haha');
 }
 
 {
-	var _arr = document.querySelectorAll('p');
-	var pArr = Array.from(_arr);
-	pArr.forEach(function (item) {
-		console.log(item.textContent);
-	});
+	var test2 = function test2(x) {
+		var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
+
+		console.log('作用域', x, y);
+	};
+
+	var test3 = function test3(c) {
+		var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : x;
+
+		console.log('作用域', c, y);
+	};
+
+	var x = 'test';
+
+	test2('kill');
+
+	test3('kill');
+	// test2()
+}
+
+{
+	var _test = function _test() {
+		for (var _len = arguments.length, arg = Array(_len), _key = 0; _key < _len; _key++) {
+			arg[_key] = arguments[_key];
+		}
+
+		var _iteratorNormalCompletion = true;
+		var _didIteratorError = false;
+		var _iteratorError = undefined;
+
+		try {
+			for (var _iterator = arg[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+				var v = _step.value;
+
+				console.log('rest', v);
+			}
+		} catch (err) {
+			_didIteratorError = true;
+			_iteratorError = err;
+		} finally {
+			try {
+				if (!_iteratorNormalCompletion && _iterator.return) {
+					_iterator.return();
+				}
+			} finally {
+				if (_didIteratorError) {
+					throw _iteratorError;
+				}
+			}
+		}
+	};
+
+	_test('1', 2, 3, 4, 'a ');
+}
+
+{
+	var _console, _console2;
+
+	(_console = console).log.apply(_console, [1, 2, 4]);
+	(_console2 = console).log.apply(_console2, ['a'].concat([1, 2, 4]));
+}
+
+{
+	var arrow = function arrow(v) {
+		return v + 2;
+	}; //函数名，函数参数，函数返回值
+	var arrow2 = function arrow2() {
+		return 2;
+	}; //函数名，函数参数，函数返回值
+	console.log(arrow(3));
+	console.log(arrow2());
+}
+
+// 提升性能
+{
+	var tail = function tail(x) {
+		console.log('tail', x);
+	};
+
+	var fx = function fx(x) {
+		return tail(x);
+	};
+
+	fx(123);
 }
 
 /***/ })
