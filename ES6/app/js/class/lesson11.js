@@ -73,13 +73,13 @@
 	console.log('has',Reflect.has(obj,'name'))
 }
 
-{
-	function validator(target,validator){
-		return new Proxy{target,{
-			_validator:validator,
-			set(target,key,value,proxy){
-				if (target.has()) {}
-			}
-		}}
-	}
-}
+// {
+// 	function validator(target,validator){
+// 		return new Proxy{target,{
+// 			_validator:validator,
+// 			set(target,key,value,proxy){
+// 				if (target.has()) {}
+// 			}
+// 		}}
+// 	}
+// }

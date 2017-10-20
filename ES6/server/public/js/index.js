@@ -81,9 +81,101 @@ __webpack_require__(2);
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: D:/file/chenshisong/ES6-Lottery-project/ES6/app/js/class/lesson11.js: Unexpected token, expected ; (78:18)\n\n\u001b[0m \u001b[90m 76 | \u001b[39m{\n \u001b[90m 77 | \u001b[39m\t\u001b[36mfunction\u001b[39m validator(target\u001b[33m,\u001b[39mvalidator){\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 78 | \u001b[39m\t\t\u001b[36mreturn\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mProxy\u001b[39m{target\u001b[33m,\u001b[39m{\n \u001b[90m    | \u001b[39m\t\t                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 79 | \u001b[39m\t\t\t_validator\u001b[33m:\u001b[39mvalidator\u001b[33m,\u001b[39m\n \u001b[90m 80 | \u001b[39m\t\t\tset(target\u001b[33m,\u001b[39mkey\u001b[33m,\u001b[39mvalue\u001b[33m,\u001b[39mproxy){\n \u001b[90m 81 | \u001b[39m\t\t\t\t\u001b[36mif\u001b[39m (target\u001b[33m.\u001b[39mhas()) {}\u001b[0m\n");
+"use strict";
+
+
+// Proxy和Reflect
+
+{
+	var obj = {
+		time: '2017-10-19',
+		name: 'net',
+		_r: 123
+		// 映射obj,对读写进行干涉
+	};var monitor = new Proxy(obj, {
+		// 拦截对象属性的读取
+		get: function get(target, key) {
+			return target[key].replace('2017', '2018');
+		},
+
+		// 拦截对象设置属性
+		set: function set(target, key, val) {
+			if (key === 'name') {
+				return target[key] = val;
+			} else {
+				return target[key];
+			}
+		},
+		//只允许修改name
+		//拦截key in obj操作
+		has: function has(target, key) {
+			if (key === 'name') {
+				return target[key];
+			} else {
+				return false;
+			}
+		},
+
+		// 拦截删除
+		deleteProperty: function deleteProperty(target, key) {
+			if (key.indexOf('_') > -1) {
+				delete target[key];
+				return true;
+			} else {
+				return target[key];
+			}
+		},
+
+		// 拦截Object.keys,Object.getOwnPropertySymbols,Object.getOwnPropertyNmaes
+		ownKeys: function ownKeys(target) {
+			return Object.keys(target).filter(function (item) {
+				return item != 'time';
+			});
+		}
+	});
+
+	console.log(monitor.time); //2018-10-19
+	monitor.time = '2018';
+	console.log(monitor.time); //2018-10-19
+	monitor.name = 'www';
+	console.log(monitor.name); //www
+
+	console.log('has', 'name' in monitor, 'time' in monitor);
+
+	// delete monitor.time;
+	// console.log('delete',monitor)
+
+	// delete monitor._r;
+	// console.log('delete',monitor)
+
+	console.log('ownKeys', Object.keys(monitor));
+}
+
+{
+	var _obj = {
+		time: '2017-10-19',
+		name: 'net',
+		_r: 123
+	};
+
+	console.log('Reflect', Reflect.get(_obj, 'time'));
+	Reflect.set(_obj, 'name', 'hhh');
+	console.log('set', _obj);
+	console.log('has', Reflect.has(_obj, 'name'));
+}
+
+// {
+// 	function validator(target,validator){
+// 		return new Proxy{target,{
+// 			_validator:validator,
+// 			set(target,key,value,proxy){
+// 				if (target.has()) {}
+// 			}
+// 		}}
+// 	}
+// }
 
 /***/ })
 /******/ ]);
