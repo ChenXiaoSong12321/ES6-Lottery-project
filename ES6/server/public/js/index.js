@@ -86,96 +86,140 @@ __webpack_require__(2);
 "use strict";
 
 
-// Proxy和Reflect
+// Promise
+// 什么是异步
+// Promise的作用
+// Promise的基本用法
 
 {
-	var obj = {
-		time: '2017-10-19',
-		name: 'net',
-		_r: 123
-		// 映射obj,对读写进行干涉
-	};var monitor = new Proxy(obj, {
-		// 拦截对象属性的读取
-		get: function get(target, key) {
-			return target[key].replace('2017', '2018');
-		},
-
-		// 拦截对象设置属性
-		set: function set(target, key, val) {
-			if (key === 'name') {
-				return target[key] = val;
-			} else {
-				return target[key];
-			}
-		},
-		//只允许修改name
-		//拦截key in obj操作
-		has: function has(target, key) {
-			if (key === 'name') {
-				return target[key];
-			} else {
-				return false;
-			}
-		},
-
-		// 拦截删除
-		deleteProperty: function deleteProperty(target, key) {
-			if (key.indexOf('_') > -1) {
-				delete target[key];
-				return true;
-			} else {
-				return target[key];
-			}
-		},
-
-		// 拦截Object.keys,Object.getOwnPropertySymbols,Object.getOwnPropertyNmaes
-		ownKeys: function ownKeys(target) {
-			return Object.keys(target).filter(function (item) {
-				return item != 'time';
-			});
-		}
+	var ajax = function ajax(cb) {
+		console.log('do');
+		setTimeout(function () {
+			cb && cb();
+		}, 1000);
+	};
+	ajax(function () {
+		console.log('asyn', 1);
 	});
-
-	console.log(monitor.time); //2018-10-19
-	monitor.time = '2018';
-	console.log(monitor.time); //2018-10-19
-	monitor.name = 'www';
-	console.log(monitor.name); //www
-
-	console.log('has', 'name' in monitor, 'time' in monitor);
-
-	// delete monitor.time;
-	// console.log('delete',monitor)
-
-	// delete monitor._r;
-	// console.log('delete',monitor)
-
-	console.log('ownKeys', Object.keys(monitor));
 }
 
 {
-	var _obj = {
-		time: '2017-10-19',
-		name: 'net',
-		_r: 123
+	var _ajax = function _ajax() {
+		console.log('do2');
+		// res：执行下一步操作，rej：中断当前操作
+		return new Promise(function (res, rej) {
+			setTimeout(function () {
+				res();
+			}, 1000);
+		});
 	};
 
-	console.log('Reflect', Reflect.get(_obj, 'time'));
-	Reflect.set(_obj, 'name', 'hhh');
-	console.log('set', _obj);
-	console.log('has', Reflect.has(_obj, 'name'));
+	_ajax().then(function () {
+		console.log('promise', 2);
+	});
 }
 
-// {
-// 	function validator(target,validator){
-// 		return new Proxy{target,{
-// 			_validator:validator,
-// 			set(target,key,value,proxy){
-// 				if (target.has()) {}
-// 			}
-// 		}}
-// 	}
-// }
+{
+	var _ajax2 = function _ajax2() {
+		console.log('do3');
+		// res：执行下一步操作，rej：中断当前操作
+		return new Promise(function (res, rej) {
+			setTimeout(function () {
+				res();
+			}, 1000);
+		});
+	};
+
+	_ajax2().then(function () {
+		return new Promise(function (res, rej) {
+			setTimeout(function () {
+				res();
+			}, 2000);
+		});
+	}).then(function () {
+		console.log('3');
+	});
+}
+
+{
+	var _ajax3 = function _ajax3(num) {
+		console.log('do4');
+		return new Promise(function (res, rej) {
+			if (num > 5) {
+				res();
+			} else {
+				throw Error('wrong');
+			}
+		});
+	};
+
+	_ajax3(6).then(function () {
+		console.log('log', 6);
+	}).catch(function (err) {
+		console.log('catch', err);
+	});
+	// ajax(3)
+	// 	.then(function(){
+	// 		console.log('log',3)
+	// 	}).catch(function(err){
+	// 		console.log('catch',err)
+	// 	})
+}
+
+{
+	// Promise.all
+	//所有图片加载完在添加到页面
+	var loadImg = function loadImg(src) {
+		return new Promise(function (res, rej) {
+			var img = document.createElement('img');
+			img.src = src;
+			img.onload = function () {
+				res(img);
+			};
+			img.onerror = function function_name(err) {
+				rej(err);
+			};
+		});
+	};
+
+	var showImgs = function showImgs(imgs) {
+		imgs.forEach(function (img) {
+			document.body.appendChild(img);
+		});
+	};
+	// 把多个Promise实例当一个Promise实例
+	// all下面的数组都完成后才触发下面的方法
+
+
+	Promise.all([loadImg('http://pic64.nipic.com/file/20150420/6215159_143018660000_2.jpg'), loadImg('http://img.taopic.com/uploads/allimg/120901/219077-120Z122341668.jpg'), loadImg('http://imgsrc.baidu.com/imgad/pic/item/03087bf40ad162d9d2fbac011bdfa9ec8a13cd92.jpg')]).then(showImgs);
+}
+
+{
+	// Promise.race
+	// 有一个图片加载，其余的就不加载了
+	var _loadImg = function _loadImg(src) {
+		return new Promise(function (res, rej) {
+			var img = document.createElement('img');
+			img.src = src;
+			img.onload = function () {
+				res(img);
+			};
+			img.onerror = function function_name(err) {
+				rej(err);
+			};
+		});
+	};
+
+	var _showImgs = function _showImgs(img) {
+		var div = document.createElement('div');
+		div.appendChild(img);
+		document.body.appendChild(div);
+	};
+	// 谁先到显示谁
+
+
+	Promise.race([_loadImg('http://pic64.nipic.com/file/20150420/6215159_143018660000_2.jpg'), _loadImg('http://img.taopic.com/uploads/allimg/120901/219077-120Z122341668.jpg'), _loadImg('http://imgsrc.baidu.com/imgad/pic/item/03087bf40ad162d9d2fbac011bdfa9ec8a13cd92.jpg')]).then(_showImgs);
+}
 
 /***/ })
 /******/ ]);
