@@ -13,8 +13,15 @@
 // import './class/lesson10'
 // import './class/lesson11'
 // import './class/lesson12'
-import './class/lesson13'
+// import './class/lesson13'
 // import './class/lesson14'
 // import './class/lesson15'
 // import './class/lesson16'
 // import './class/lesson17'
+// import {A,test,Hello} from './class/lesson17'
+// import {A} from './class/lesson17'
+// import * as lesson from './class/lesson17'
+// import lesson17 from './class/lesson17'
+// console.log(A,test,Hello)
+// console.log(A)
+// console.log(lesson17)
