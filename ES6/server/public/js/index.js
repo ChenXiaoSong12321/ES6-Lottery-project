@@ -13896,6 +13896,8 @@ var _lottery2 = _interopRequireDefault(_lottery);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // es7兼容包
+console.log(_lottery2.default);
+
 var syy = new _lottery2.default();
 console.log(syy);
 // import './class/lesson1'
@@ -19491,6 +19493,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+console.log(_base2.default);
+
+console.log(_timer2.default);
+
+console.log(_calculate2.default);
+
+console.log(_interface2.default);
+
+console.log(_jquery2.default);
 var copyProperties = function copyProperties(target, source) {
 	var _iteratorNormalCompletion = true;
 	var _didIteratorError = false;
@@ -19520,14 +19531,14 @@ var copyProperties = function copyProperties(target, source) {
 		}
 	}
 };
-
+console.log(copyProperties);
 var mix = function mix() {
 	var Mix = function Mix() {
 		_classCallCheck(this, Mix);
 	};
 
-	for (var _len = arguments.length, minins = Array(_len), _key = 0; _key < _len; _key++) {
-		minins[_key] = arguments[_key];
+	for (var _len = arguments.length, mixins = Array(_len), _key = 0; _key < _len; _key++) {
+		mixins[_key] = arguments[_key];
 	}
 
 	var _iteratorNormalCompletion2 = true;
@@ -19535,11 +19546,11 @@ var mix = function mix() {
 	var _iteratorError2 = undefined;
 
 	try {
-		for (var _iterator2 = minins[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-			var minin = _step2.value;
+		for (var _iterator2 = mixins[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+			var mixin = _step2.value;
 
-			copyProperties(Mix, minin);
-			copyProperties(mix.prototype, minin.prototype);
+			copyProperties(Mix, mixin);
+			copyProperties(Mix.prototype, mixin.prototype);
 		}
 	} catch (err) {
 		_didIteratorError2 = true;
@@ -19555,7 +19566,10 @@ var mix = function mix() {
 			}
 		}
 	}
+
+	return Mix;
 };
+console.log(mix);
 
 var Lottery = function (_mix) {
 	_inherits(Lottery, _mix);
@@ -19694,7 +19708,7 @@ var Base = function () {
 		key: 'initNumber',
 		value: function initNumber() {
 			for (var i = 1; i < 12; i++) {
-				this.number.add('' + i).padStart(2, '0');
+				this.number.add(('' + i).padStart(2, '0'));
 			}
 		}
 	}, {
@@ -19737,7 +19751,7 @@ var Base = function () {
 		key: 'setOpenCode',
 		value: function setOpenCode(code) {
 			var self = this;
-			self.open_code.clear();
+			self.open_code_list.clear();
 			var _iteratorNormalCompletion2 = true;
 			var _didIteratorError2 = false;
 			var _iteratorError2 = undefined;
@@ -19746,7 +19760,7 @@ var Base = function () {
 				for (var _iterator2 = code.values()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 					var item = _step2.value;
 
-					self.open_code.add(item);
+					self.open_code_list.add(item);
 				}
 			} catch (err) {
 				_didIteratorError2 = true;
@@ -20178,7 +20192,7 @@ var Interface = function () {
 					data: { issue: issue },
 					dataType: 'json',
 					success: function success(receive) {
-						self.setOpenCode(receive.data);
+						self.setOpenCode(receive);
 						res.call(self, receive);
 					},
 					error: function error(err) {

@@ -47,7 +47,7 @@ class Interface{
 				data:{issue:issue},
 				dataType:'json',
 				success:function(receive){
-					self.setOpenCode(receive.data)
+					self.setOpenCode(receive)
 					res.call(self,receive)
 				},
 				error:function(err){

@@ -40,7 +40,7 @@ class Base{
 
 	initNumber(){
 		for(let i=1;i<12;i++){
-			this.number.add(''+i).padStart(2,'0')
+			this.number.add((''+i).padStart(2,'0'))
 		}
 	}
 
@@ -57,9 +57,9 @@ class Base{
 
 	setOpenCode(code){
 		let self = this
-		self.open_code.clear()
+		self.open_code_list.clear()
 		for(let item of code.values()){
-			self.open_code.add(item)
+			self.open_code_list.add(item)
 		}
 		self.updateOpenCode&&self.updateOpenCode.call(sef,code)
 	}

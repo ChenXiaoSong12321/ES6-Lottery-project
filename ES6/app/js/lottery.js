@@ -1,10 +1,14 @@
 import 'babel-polyfill';
 import Base from './lottery/base.js'
+console.log(Base)
 import Timer from './lottery/timer.js'
+console.log(Timer)
 import Calculate from './lottery/calculate.js'
+console.log(Calculate)
 import Interface from './lottery/interface.js'
+console.log(Interface)
 import $ from 'jquery'
-
+console.log($)
 const copyProperties = function(target, source) {
 	for (let key of Reflect.ownKeys(source)) {
 		if (key !== 'constructor' && key !== 'prototype' && key !== 'name') {
@@ -13,15 +17,16 @@ const copyProperties = function(target, source) {
 		}
 	}
 }
-
-const mix = function(...minins) {
+console.log(copyProperties)
+const mix = function(...mixins) {
 	class Mix {}
-	for (let minin of minins) {
-		copyProperties(Mix, minin)
-		copyProperties(mix.prototype, minin.prototype)
+	for (let mixin of mixins) {
+		copyProperties(Mix, mixin)
+		copyProperties(Mix.prototype, mixin.prototype)
 	}
+	return Mix
 }
-
+console.log(mix)
 class Lottery extends mix(Base, Calculate, Interface, Timer) {
 	constructor(name = 'syy', cname = '11选5', issue = '**', state = '**') {
 		super()
