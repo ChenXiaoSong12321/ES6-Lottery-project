@@ -1,6 +1,9 @@
 // es7兼容包
 import 'babel-polyfill';
 import Lottery from './lottery';
+
+const syy = new Lottery
+console.log(syy)
 // import './class/lesson1'
 // import './class/lesson2'
 // import './class/lesson3'
