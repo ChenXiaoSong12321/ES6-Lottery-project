@@ -130,7 +130,7 @@ class Base{
 		let active = $active?$active.length:0
 		let count = self.computeCount(active,self.cur_play)
 		if (count) {
-			self.addCodeItem($active.join(''),self.cur_play,self.play_list.get(self.cur_play).name,count)
+			self.addCodeItem($active.join(' '),self.cur_play,self.play_list.get(self.cur_play).name,count)
 		}
 	}
 
@@ -172,7 +172,7 @@ class Base{
 			<strong class="red">${range[0]}</strong> 至 <strong class="red">${range[1]}</strong>元，
 			您将${(win1<0&&win2<0)?'亏损':'盈利'}
 			<strong class="${win1>=0?'red':'green'}">${c1}</strong> 
-			至 <strong class="${win2>=0?'red':'green'}">${c1}</strong>元</em>`
+			至 <strong class="${win2>=0?'red':'green'}">${range[1]-count*2}</strong>元</em>`
 		}
 		$('.sel_info').html(tpl)
 	}
@@ -187,10 +187,10 @@ class Base{
 	}
 
 	getRandom(num){
-		let arr =[]
+		let arr =[],index;
 		let number = Array.from(this.number)
 		while(num--){
-			index=Number.parseInt(Math.rancom())*num.length
+			index=Number.parseInt(Math.random()*number.length)
 			arr.push(number[index])
 			number.splice(index,1)
 		}
@@ -200,7 +200,7 @@ class Base{
 	getRandomCode(e){
 		e.preventDefault()
 		let num = e.currentTarget.getAttribute('count')
-		let play = this.cur_play.match(/\d+/g[0])
+		let play = this.cur_play.match(/\d+/g)[0]
 		let self=this
 		if(num==='0'){
 			$(self.cart_el).html('')

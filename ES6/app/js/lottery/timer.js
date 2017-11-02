@@ -2,7 +2,7 @@ class Timer{
 	countdown(end,update,handle){
 		const now = new Date().getTime()
 		const self = this
-		if (now-end) {
+		if (now-end>0) {
 			handle.call(self)
 		}else{
 			let last_time = end-now
@@ -14,7 +14,7 @@ class Timer{
 			let h = Math.floor((last_time-d*px_d)/px_h)
 			let m = Math.floor((last_time-d*px_d-h*px_h)/px_m)
 			let s = Math.floor((last_time-d*px_d-h*px_h-m*px_m)/px_s)
-			let r = []
+			let r = [];
 			if (d>0) {
 				r.push(`<em>${d}</em>天`)
 			}
@@ -30,7 +30,7 @@ class Timer{
 			self.last_time = r.join(' ')
 			update.call(self,r.join(' '))
 			setTimeout(function () {
-				self.countdown
+				self.countdown(end,update,handle)
 			},1000)
 		}
 	}

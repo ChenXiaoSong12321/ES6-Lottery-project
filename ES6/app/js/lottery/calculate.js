@@ -7,7 +7,7 @@ class Calculate{
 		const exist = this.play_list.has(play_name)
 		const arr = new Array(active).fill('0')
 		if(exist && play_name.at(0) === 'r'){
-			count = Calculate.combine(arr,play_name.split(''))
+			count = Calculate.combine(arr,play_name.split('')[1]).length
 		}
 		return count
 	}
@@ -15,7 +15,7 @@ class Calculate{
 	// arr 参与组合运算的数组
 	// size 计算注数
 	static combine(arr,size){
-		let allResult = [] 
+		let allResult = [] ;
 		(function f(arr,size,result){
 			let arrLen = arr.length
 			if (size>arrLen) {
@@ -37,6 +37,7 @@ class Calculate{
 				}
 			}
 		})(arr,size,[])
+		return allResult
 	}
 
 	// 奖金范围预测

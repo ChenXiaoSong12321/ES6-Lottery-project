@@ -19621,7 +19621,7 @@ var Lottery = function (_mix) {
 			var self = this;
 			(0, _jquery2.default)('#plays').on('click', 'li', self.changePlayNav.bind(self));
 			(0, _jquery2.default)('.boll-list').on('click', '.btn-boll', self.toggleCodeActive.bind(self));
-			(0, _jquery2.default)('#confirm_sel_code').on('click', 'li', self.assistHandle.bind(self));
+			(0, _jquery2.default)('#confirm_sel_code').on('click', self.addCode.bind(self));
 			(0, _jquery2.default)('.dxjo').on('click', 'li', self.assistHandle.bind(self));
 			(0, _jquery2.default)('.qkmethod').on('click', '.btn-middle', self.getRandomCode.bind(self));
 		}
@@ -19712,10 +19712,10 @@ var Base = function () {
 			try {
 				for (var _iterator = omit.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 					var _step$value = _slicedToArray(_step.value, 2),
-					    _index = _step$value[0],
+					    index = _step$value[0],
 					    item = _step$value[1];
 
-					self.omit.set(_index, item);
+					self.omit.set(index, item);
 				}
 			} catch (err) {
 				_didIteratorError = true;
@@ -19840,7 +19840,7 @@ var Base = function () {
 			var active = $active ? $active.length : 0;
 			var count = self.computeCount(active, self.cur_play);
 			if (count) {
-				self.addCodeItem($active.join(''), self.cur_play, self.play_list.get(self.cur_play).name, count);
+				self.addCodeItem($active.join(' '), self.cur_play, self.play_list.get(self.cur_play).name, count);
 			}
 		}
 	}, {
@@ -19869,7 +19869,7 @@ var Base = function () {
 			} else if (range[0] === range[1]) {
 				tpl = '\u60A8\u9009\u4E86<b>' + count + '</b> \u6CE8\uFF0C\u5171 <b>' + count * 2 + '</b> \u5143 <em>\u82E5\u4E2D\u5956\uFF0C\u5956\u91D1\uFF1A\n\t\t\t<strong class="red">' + range[0] + '</strong> \u5143\uFF0C\n\t\t\t\u60A8\u5C06' + (win1 >= 0 ? '盈利' : '亏损') + '\n\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + Math.abs(win1) + '</strong> \u5143</em>';
 			} else {
-				tpl = '\u60A8\u9009\u4E86<b>' + count + '</b> \u6CE8\uFF0C\u5171 <b>' + count * 2 + '</b> \u5143 <em>\u82E5\u4E2D\u5956\uFF0C\u5956\u91D1\uFF1A\n\t\t\t<strong class="red">' + range[0] + '</strong> \u81F3 <strong class="red">' + range[1] + '</strong>\u5143\uFF0C\n\t\t\t\u60A8\u5C06' + (win1 < 0 && win2 < 0 ? '亏损' : '盈利') + '\n\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + c1 + '</strong> \n\t\t\t\u81F3 <strong class="' + (win2 >= 0 ? 'red' : 'green') + '">' + c1 + '</strong>\u5143</em>';
+				tpl = '\u60A8\u9009\u4E86<b>' + count + '</b> \u6CE8\uFF0C\u5171 <b>' + count * 2 + '</b> \u5143 <em>\u82E5\u4E2D\u5956\uFF0C\u5956\u91D1\uFF1A\n\t\t\t<strong class="red">' + range[0] + '</strong> \u81F3 <strong class="red">' + range[1] + '</strong>\u5143\uFF0C\n\t\t\t\u60A8\u5C06' + (win1 < 0 && win2 < 0 ? '亏损' : '盈利') + '\n\t\t\t<strong class="' + (win1 >= 0 ? 'red' : 'green') + '">' + c1 + '</strong> \n\t\t\t\u81F3 <strong class="' + (win2 >= 0 ? 'red' : 'green') + '">' + (range[1] - count * 2) + '</strong>\u5143</em>';
 			}
 			(0, _jquery2.default)('.sel_info').html(tpl);
 		}
@@ -19886,10 +19886,11 @@ var Base = function () {
 	}, {
 		key: 'getRandom',
 		value: function getRandom(num) {
-			var arr = [];
+			var arr = [],
+			    index = void 0;
 			var number = Array.from(this.number);
 			while (num--) {
-				index = Number.parseInt(Math.rancom()) * num.length;
+				index = Number.parseInt(Math.random() * number.length);
 				arr.push(number[index]);
 				number.splice(index, 1);
 			}
@@ -19900,7 +19901,7 @@ var Base = function () {
 		value: function getRandomCode(e) {
 			e.preventDefault();
 			var num = e.currentTarget.getAttribute('count');
-			var play = this.cur_play.match(/\d+/g[0]);
+			var play = this.cur_play.match(/\d+/g)[0];
 			var self = this;
 			if (num === '0') {
 				(0, _jquery2.default)(self.cart_el).html('');
@@ -19942,7 +19943,7 @@ var Timer = function () {
 		value: function countdown(end, update, handle) {
 			var now = new Date().getTime();
 			var self = this;
-			if (now - end) {
+			if (now - end > 0) {
 				handle.call(self);
 			} else {
 				var last_time = end - now;
@@ -19970,7 +19971,7 @@ var Timer = function () {
 				self.last_time = r.join(' ');
 				update.call(self, r.join(' '));
 				setTimeout(function () {
-					self.countdown;
+					self.countdown(end, update, handle);
 				}, 1000);
 			}
 		}
@@ -20012,7 +20013,7 @@ var Calculate = function () {
 			var exist = this.play_list.has(play_name);
 			var arr = new Array(active).fill('0');
 			if (exist && play_name.at(0) === 'r') {
-				count = Calculate.combine(arr, play_name.split(''));
+				count = Calculate.combine(arr, play_name.split('')[1]).length;
 			}
 			return count;
 		}
@@ -20072,7 +20073,8 @@ var Calculate = function () {
 	}], [{
 		key: 'combine',
 		value: function combine(arr, size) {
-			var allResult = [](function f(arr, size, result) {
+			var allResult = [];
+			(function f(arr, size, result) {
 				var arrLen = arr.length;
 				if (size > arrLen) {
 					return;
@@ -20093,6 +20095,7 @@ var Calculate = function () {
 					}
 				}
 			})(arr, size, []);
+			return allResult;
 		}
 	}]);
 
