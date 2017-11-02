@@ -19493,15 +19493,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-console.log(_base2.default);
-
-console.log(_timer2.default);
-
-console.log(_calculate2.default);
-
-console.log(_interface2.default);
-
-console.log(_jquery2.default);
 var copyProperties = function copyProperties(target, source) {
 	var _iteratorNormalCompletion = true;
 	var _didIteratorError = false;
@@ -19531,7 +19522,6 @@ var copyProperties = function copyProperties(target, source) {
 		}
 	}
 };
-console.log(copyProperties);
 var mix = function mix() {
 	var Mix = function Mix() {
 		_classCallCheck(this, Mix);
@@ -19569,7 +19559,6 @@ var mix = function mix() {
 
 	return Mix;
 };
-console.log(mix);
 
 var Lottery = function (_mix) {
 	_inherits(Lottery, _mix);
@@ -20162,8 +20151,8 @@ var Interface = function () {
 		// 获取期号
 
 	}, {
-		key: 'getOpencode',
-		value: function getOpencode(issue) {
+		key: 'getOpenCode',
+		value: function getOpenCode(issue) {
 			var self = this;
 			return new Promise(function (res, rej) {
 				_jquery2.default.ajax({
@@ -20192,7 +20181,6 @@ var Interface = function () {
 					data: { issue: issue },
 					dataType: 'json',
 					success: function success(receive) {
-						self.setOpenCode(receive);
 						res.call(self, receive);
 					},
 					error: function error(err) {
