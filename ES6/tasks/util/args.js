@@ -1,4 +1,5 @@
 // 引入yargs包
+// 处理命令行参数
 import yargs from 'yargs';
 
 const args = yargs
@@ -30,7 +31,7 @@ const args = yargs
 		default:8080,
 		describe:'server port'
 	})
-	
+	//对命令行以字符串进行解析
 	.argv
 
 export default args;
