@@ -3,15 +3,15 @@
 	// 布尔值解构赋值、函数参数解构赋值、数值解构赋值
 // 
 {
-	let a,b,reset
+	let a,b,rest
 	[a,b] = [1,2]
 	console.log(a,b)
 }
 
 {
-	let a,b,reset
-	[a,b,...reset] = [1,2,3,4,5,6]
-	console.log(a,b,reset)
+	let a,b,rest
+	[a,b,...rest] = [1,2,3,4,5,6]
+	console.log(a,b,rest)
 }
 
 {
@@ -21,7 +21,7 @@
 }
 // 如果解构赋值没有成功配对会输出undefined
 {
-	let a,b,c,reset
+	let a,b,c,rest
 	[a,b,c=3] = [1,2]
 	console.log(a,b,c)
 }
